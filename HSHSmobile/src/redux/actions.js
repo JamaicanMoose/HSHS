@@ -3,12 +3,12 @@ import {store} from './store.js';
 
 export const getGuestsStart = () => ({
 	type: 'GET_GUESTS_START'
-});
+})
 
 export const getGuestsSuccess = (data) => ({
 	type: 'GET_GUESTS_SUCCESS',
 	payload: data
-});
+})
 
 export const getGuests = () => {
 		store.dispatch(getGuestsStart());
@@ -21,12 +21,12 @@ export const getGuests = () => {
 
 export const getInteractionsStart = () => ({
 	type: 'GET_INTERACTIONS_START'
-});
+})
 
 export const getInteractionsSuccess = (data) => ({
 	type: 'GET_INTERACTIONS_SUCCESS',
 	payload: data
-});
+})
 
 export const getInteractions = () => {
 	store.dispatch(getInteractionsStart());
@@ -35,7 +35,7 @@ export const getInteractions = () => {
 			.on('value', snapshot => {
 				store.dispatch(getInteractionsSuccess(snapshot.val()));
 			})
-};
+}
 
 export const getActionItemsStart = () => ({
         type: 'GET_ACTION_ITEMS_START'
@@ -57,7 +57,7 @@ export const getActionItems = () => {
 
 export const addNewGuestStart = () => ({
 	type: 'ADD_NEW_GUEST_START'
-});
+})
 
 export const addNewGuestSuccess = () => ({
 	type: 'ADD_NEW_GUEST_SUCCESS'
@@ -71,6 +71,37 @@ export const addNewGuest = (name, age, gender, description, interactions, action
     		gender : gender,
         description: description
   });
+}
+
+export const editGuestStart = () => ({
+    type: 'EDIT_GUEST_START'
+})
+
+export const editGuestSuccess = () => ({
+    type: 'EDIT_GUEST_SUCCESS'
+})
+
+export const editGuest = (id, name, age, gender, description, interactions, actionItems) => {
+    store.dispatch(editGuestStart);
+    firebase.database().ref('guests' + '/' + id).set({
+            name: name,
+            age: age,
+            gender : gender,
+        description: description
+  });
+}
+
+export const deleteGuestStart = () => ({
+    type: 'DELETE_GUEST_START'
+});
+
+export const deleteGuestSuccess = () => ({
+    type: 'DELETE_GUEST_SUCCESS'
+})
+
+export const deleteGuest = (id) => {
+    store.dispatch(deleteGuestStart);
+     firebase.database().ref('guests' + '/' + id).delete();
 }
 
 export const addNewActionItemStart = () => ({
@@ -100,15 +131,15 @@ export const addNewActionItem = (isDone, title, creationTimestamp, locationCoord
 }
 
 export const editActionItemStart = () => ({
-        type: 'ADD_NEW_ACTION_ITEMS_START'
+        type: 'EDIT_NEW_ACTION_ITEMS_START'
 })
 
 export const editActionItemSuccess = () => ({
-        type: 'ADD_NEW_ACTION_ITEMS_SUCCESS'
+        type: 'EDIT_NEW_ACTION_ITEMS_SUCCESS'
 })
 
 export const editActionItem = (id, isDone, title, creationTimestamp, locationCoord, locationStr, shiftDate, description, guestIds, volunteerId) => {
-                store.dispatch(addNewActionItemStart);
+                store.dispatch(editActionItemStart);
                 firebase.database().ref('actionItems' + '/' + id).set({
                         isDone: isDone,
                         title: title,
@@ -123,6 +154,19 @@ export const editActionItem = (id, isDone, title, creationTimestamp, locationCoo
                         guestIds: guestIds,
                         volunteerId: volunteerId
                 })
+}
+
+export const deleteActionItemStart = () => ({
+    type: 'DELETE_ACTION_ITEM_START'
+})
+
+export const deleteActionItemSuccess = () => ({
+    type: 'DELETE_ACTION_ITEM_SUCCESS'
+})
+
+export const deleteActionItem = (id) => {
+    store.dispatch(deleteActionItemStart);
+     firebase.database().ref('actionItems' + '/' + id).delete();
 }
 
 export const addNewInteractionStart = () => ({
@@ -144,4 +188,38 @@ export const addInteractionItem = (description, details, location, receptiveness
                         timestamp: timestamp,
                         volunteers: volunteers
                 })
+}
+
+export const editInteractionStart = () => ({
+        type: 'EDIT_INTERACTIONS_START'
+})
+
+export const editNewInteractionSuccess = () => ({
+        type: 'EDIT_INTERACTIONS_SUCCESS'
+})
+
+export const editInteractionItem = (id, description, details, location, receptiveness, resources, timestamp, volunteers) => {
+                store.dispatch(editInteractionStart);
+                firebase.database().ref('interactions' + '/' + id).set({
+                        description: description,
+                        details: details,
+                        location: location,
+                        receptiveness: receptiveness,
+                        resources: resources,
+                        timestamp: timestamp,
+                        volunteers: volunteers
+                })
+}
+
+export const deleteInteractionStart = () => ({
+    type: 'DELETE_INTERACTIONS_START'
+})
+
+export const deleteInteractionSuccess = () => ({
+    type: 'DELETE_INTERACTIONS_SUCCESS'
+})
+
+export const deleteInteractionItem = (id) => {
+    store.dispatch(deleteActionItemStart);
+     firebase.database().ref('interactions' + '/' + id).delete();
 }
