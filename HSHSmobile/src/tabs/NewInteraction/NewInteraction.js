@@ -18,61 +18,17 @@ import Counter from "../../modules/Counter";
 import Icon from 'react-native-vector-icons/Ionicons';
 
 
-const instructions = Platform.select({
-    ios: 'please make me an ios screen!',
-    android: 'please make me an android screen!'
-});
+
 
 export default class Info extends Component {
     constructor(props) {
       super(props);
-      this.counters = {"Example Counter": 666};
     }
 
-    // Sample function to render the item counters. To add new counters,
-    // add elements to this.counters (item list could also come from redux)
-    // Counter spacing issues are probably in Counter.js
-    renderCounters() {
-      let items = Object.keys(this.counters);
-      return (
-        <View style={styles.counterContainer}>
-            {
-              items.map((name) =>
-                      <Counter
-                        key={name}
-                        itemName={name}
-                        count={this.counters[name]}
-                        onValueChange={(val) =>
-                            {
-                              this.counters[name] = val;
-                            }}
-                      />)
-              }
-        </View>
-      );
-    }
 
     render() {
         return (
           <View>
-            <Text
-            onPress= {()=>{this.Popup.show()}}
-            >
-            {"Click me to open"}
-            </Text>
-            <View style={styles.container}>
-                <Popup
-                  ref={(popup) => {
-                      this.addCounterDialog = popup;
-                  }}
-                  title={"Add a New Item"}
-                  onConfirm={()=>{}}
-                  >
-                  <Text>Test</Text>
-                  <Text>Test</Text>
-                </Popup>
-            </View>
-            {this.renderCounters()}
           </View>
         );
     }
